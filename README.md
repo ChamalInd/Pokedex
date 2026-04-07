@@ -1,2 +1,3 @@
-# Pok-dex
-A simple and interactive Pokédex
+# Pokédex
+#### Vide Demo: 
+#### A Simple and Interactive Pokédex.
