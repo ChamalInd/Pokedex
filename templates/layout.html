@@ -12,12 +12,18 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 
+    <!-- Adding Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <!-- Addin Local Stylesheets -->
     <link rel="stylesheet" href="/static/styles.css">
 
     <!-- Web icon -->
-    <link rel="shortcut icon" href="/static/pokeball.png" type="image/x-icon">
-    <title>Pokédex</title>
+    <link rel="shortcut icon" href="{% block icon %}{% endblock %}" type="image/x-icon">
+    <title>
+        {% block title %}
+        {% endblock%}
+    </title>
 </head>
 
 <body>

@@ -1,4 +1,5 @@
 import requests
+import random
 
 
 TYPES = {}
@@ -8,7 +9,11 @@ TYPES = {}
 def pokemon_details(name):
     try:
         # getting data from api
-        pokemon_data = lookup(f'pokemon/{name.lower()}')
+        name = str(name)
+        if name.isnumeric():
+            pokemon_data = lookup(f'pokemon/{name}')
+        else:
+            pokemon_data = lookup(f'pokemon/{name.lower()}')
         species = pokemon_data['species']['name']
         species_data = lookup(f'pokemon-species/{species}')
         evol_url = species_data['evolution_chain']['url'].replace('https://pokeapi.co/api/v2/', '')
@@ -71,6 +76,22 @@ def pokemon_details(name):
         print(e)
     
     return None
+
+
+# get images and details of index page pokemons
+def index_pokemons():
+    data_array = []
+    i = 0
+
+    while i < 6:
+        try:
+            data = pokemon_details(random.randint(1, 1025))
+            data_array.append([data['id'], data['name'], data['norm-img-url'], data['types']])
+            i += 1
+        except Exception as e:
+            print(e)
+
+    return data_array
 
 
 # requesting data from pokeapi

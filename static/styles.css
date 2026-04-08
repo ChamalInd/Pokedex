@@ -1,0 +1,82 @@
+body {
+    background-color: white;
+}
+
+button[type="submit"] {
+    border: none;
+    border-radius: 5px;
+    background-color: #de7340;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #b15c33;
+}
+
+.search-div {
+    background-color: #313131;
+    width: 100%;
+    padding: 50px;
+    text-align: center;
+}
+
+.search-div div {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: -20px;
+    margin-bottom: 60px;
+}
+
+.search-div div img {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+}
+
+.search-div div h1 {
+    font-size: 5rem;
+    color: white;
+    font-weight: bolder;
+}
+
+.search-div input[type="search"] {
+    line-height: 35px;
+    width: 30%;
+    border: 1.5px solid #313131;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.search-div input[type="search"]:focus {
+    outline: none;
+    border: 1.5px solid #b15c33;
+}
+
+.search-div button[type="submit"] {
+    height: 40px;
+    width: 40px;
+}
+
+.random-picks {
+    background-color: white;
+    width: 100%;
+    text-align: center;
+}
+
+.random-picks button[type="submit"] {
+    height: 50px;
+    width: 30%;
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+
+
+@media (max-width: 760px) {
+    .search-div input[type="search"], .random-picks button[type="submit"] {
+        width: calc(100% - 100px);
+    }
+}

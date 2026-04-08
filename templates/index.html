@@ -1,5 +1,47 @@
 {% extends "layout.html" %}
 
+{% block icon %}
+/static/pokeball.png
+{% endblock %}
+
+{% block title %}
+Pokédex
+{% endblock %}
+
 {% block main %}
-{{ data }}
+<div class="search-div">
+    <div>
+        <img src="/static/pokeball.png" alt="">
+        <h1>PokéDex</h1>
+    </div>
+    <form action="/pokemon" method="post">
+        <input autofocus autocomplete="off" type="search" name="name" placeholder="Search your favourite pokémon">
+        <button name="action" value="search" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </form>
+</div>
+
+<div class="random-picks">
+    <form action="/" method="post">
+        <button name="action" value="refresh" type="submit">
+            <i class="fa-solid fa-arrows-rotate"></i>&nbsp;Surprise Me!
+        </button>
+    </form>
+
+    <div>
+        {% for pokemon in pokemons %}
+        <div>
+            <img src="{{ pokemon[2] }}" alt="{{ pokemon[1] }}">
+            <p>{{ pokemon[0] }}</p>
+            <p>{{ pokemon[1] }}</p>
+            <div>
+                {% for type in pokemon[3] %}
+                <p>{{ type }}</p>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
