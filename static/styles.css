@@ -1,3 +1,7 @@
+* {
+    transition: all 0.3s ease;
+}
+
 body {
     background-color: white;
 }
@@ -7,7 +11,6 @@ button[type="submit"] {
     border-radius: 5px;
     background-color: #de7340;
     color: white;
-    transition: all 0.3s ease;
 }
 
 button[type="submit"]:hover {
@@ -47,7 +50,6 @@ button[type="submit"]:hover {
     width: 30%;
     border: 1.5px solid #313131;
     border-radius: 5px;
-    transition: all 0.3s ease;
 }
 
 .search-div input[type="search"]:focus {
@@ -73,10 +75,50 @@ button[type="submit"]:hover {
     margin-top: 20px;
 }
 
+.random-picks .picks {
+    display: grid;
+    margin: 10px;
+    padding-left: 100px;
+    padding-right: 100px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2 auto);
+    gap: 20px;
+}
+
+.random-picks .picks .card {
+    border: none;
+    display: flex;
+    text-align: center;
+}
+
+.random-picks .picks .card img {
+    background-color: #acacac;
+    border-radius: 10px;
+}
+
+.random-picks .picks .card .id {
+    text-align: left;
+    margin-top: 5px;
+    margin-left: 20px;
+    font-size: 18px;
+    color: #acacac;
+    border-radius: 5px;
+}
+
+.random-picks .picks .card .name {
+    margin-left: 20px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: left;
+}
 
 
 @media (max-width: 760px) {
     .search-div input[type="search"], .random-picks button[type="submit"] {
         width: calc(100% - 100px);
+    }
+
+    .random-picks .picks {
+        padding: 0;
     }
 }

@@ -29,17 +29,21 @@ Pokédex
         </button>
     </form>
 
-    <div>
+    <div class="picks">
         {% for pokemon in pokemons %}
-        <div>
+        <div class="card">
             <img src="{{ pokemon[2] }}" alt="{{ pokemon[1] }}">
-            <p>{{ pokemon[0] }}</p>
-            <p>{{ pokemon[1] }}</p>
-            <div>
+            <p class="id">{{ pokemon[0] }}</p>
+            <p class="name">{{ pokemon[1] }}</p>
+            <div class="types">
                 {% for type in pokemon[3] %}
-                <p>{{ type }}</p>
+                <p class="type">{{ type }}</p>
                 {% endfor %}
             </div>
+            <form action="/pokemon" method="post">
+                <input type="text" hidden name="name" value="{{ pokemon[1] }}">
+                <button type="submit" name="action" value="submit">See more</button>
+            </form>
         </div>
         {% endfor %}
     </div>
