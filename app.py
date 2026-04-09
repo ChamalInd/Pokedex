@@ -40,5 +40,13 @@ def index():
 @app.route('/pokemon', methods=['GET', 'POST'])
 def pokemon():
     name = request.form.get('name')
-    data = pokemon_details(name)
-    return render_template('pokemon.html', data=data)
+    # error checking
+    if name:
+        data = pokemon_details(name)
+        if data != None:
+            return render_template('pokemon.html', data=data)
+        else:
+            flash(f'Invalid Pokémon name {name}')
+    else:
+        flash('Name cannot be empty')
+    return redirect('/')

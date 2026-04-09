@@ -1,5 +1,7 @@
 import requests
 import random
+import asyncio
+import httpx
 
 
 TYPES = {}
@@ -29,24 +31,26 @@ COLOR_SCHEME = {
 def pokemon_details(name):
     try:
         # getting data from api
-        name = str(name)
-        if name.isnumeric():
-            pokemon_data = lookup(f'pokemon/{name}')
-        else:
-            pokemon_data = lookup(f'pokemon/{name.lower()}')
+        pokemon_data = lookup(f'pokemon/{name.lower()}')
+
+        # getting pokemon species
         species = pokemon_data['species']['name']
+
+        # getting species data
         species_data = lookup(f'pokemon-species/{species}')
+
+        # getting evolutionary chain
         evol_url = species_data['evolution_chain']['url'].replace('https://pokeapi.co/api/v2/', '')
         evo_data = lookup(evol_url)
 
         # getting pokemon abilities
-        abilities = make_array(pokemon_data, 'abilities', 'ability')
+        abilities = [ability['ability']['name'].capitalize() for ability in pokemon_data['abilities']]
 
         # getting pokemon moves
-        moves = make_array(pokemon_data, 'moves', 'move')
+        moves = [move['move']['name'].capitalize() for move in pokemon_data['moves']]
         
         # getting types
-        types = make_array(pokemon_data, 'types', 'type')
+        types = [t['type']['name'].capitalize() for t in pokemon_data['types']]
         
         # converting height into feet and inches
         height = format(0, pokemon_data['height'])
@@ -100,18 +104,23 @@ def pokemon_details(name):
 
 # get images and details of index page pokemons
 def index_pokemons():
-    data_array = []
-    i = 0
+    ids = []
+    for _ in range(6):
+        ids.append(random.randint(1, 1025))
 
-    while i < 6:
-        try:
-            data = pokemon_details(random.randint(1, 1025))
-            data_array.append([data['id'], data['name'], data['norm-img-url'], data['types']])
-            i += 1
-        except Exception as e:
-            print(e)
+    return asyncio.run(syncronize_request(ids))
 
-    return data_array
+
+async def get_pokemon_data(client, id):
+    resp = await client.get(f"https://pokeapi.co/api/v2/pokemon/{id}")
+    data = resp.json()
+    return [data['id'], data['name'], data['sprites']['other']['official-artwork']['front_default'], [t['type']['name'].capitalize() for t in data['types']]]
+
+
+async def syncronize_request(ids):
+    async with httpx.AsyncClient() as client:
+        tasks = [get_pokemon_data(client, id) for id in ids]
+        return await asyncio.gather(*tasks)
 
 
 # requesting data from pokeapi
@@ -159,15 +168,6 @@ def gather_weakness():
             array.append(item['name'])
 
         TYPES[name] = array
-
-
-# making required arrays 
-def make_array(data, category_type, ctegory_name):
-    array = []
-    for item in data[category_type]:
-            array.append(item[ctegory_name]['name'].capitalize())
-    
-    return array
 
 
 # format numbers
