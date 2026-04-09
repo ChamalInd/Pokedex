@@ -1,3 +1,4 @@
+/* Styles for common elements */
 * {
     transition: all 0.3s ease;
 }
@@ -17,10 +18,12 @@ button[type="submit"]:hover {
     background-color: #b15c33;
 }
 
+
+/* Styles for search area */
 .search-div {
     background-color: #313131;
     width: 100%;
-    padding: 50px;
+    padding: 30px;
     text-align: center;
 }
 
@@ -30,7 +33,7 @@ button[type="submit"]:hover {
     justify-content: center;
     align-items: center;
     margin-top: -20px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
 }
 
 .search-div div img {
@@ -62,6 +65,8 @@ button[type="submit"]:hover {
     width: 40px;
 }
 
+
+/* Styles for random picks */
 .random-picks {
     background-color: white;
     width: 100%;
@@ -78,25 +83,32 @@ button[type="submit"]:hover {
 .random-picks .picks {
     display: grid;
     margin: 10px;
-    padding-left: 100px;
-    padding-right: 100px;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2 auto);
+    padding-left: 10px;
+    padding-right: 10px;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(1 auto);
     gap: 20px;
 }
 
-.random-picks .picks .card {
+.random-picks .picks form, .random-picks .picks form button {
+    width: 100%;
+    background: none;
+    min-width: 0;
+    height: auto;
+}
+
+.random-picks .picks form button .card {
     border: none;
     display: flex;
     text-align: center;
 }
 
-.random-picks .picks .card img {
+.random-picks .picks form button .card img {
     background-color: #acacac;
     border-radius: 10px;
 }
 
-.random-picks .picks .card .id {
+.random-picks .picks form button .card .id {
     text-align: left;
     margin-top: 5px;
     margin-left: 20px;
@@ -105,20 +117,41 @@ button[type="submit"]:hover {
     border-radius: 5px;
 }
 
-.random-picks .picks .card .name {
+.random-picks .picks form button .card .name {
+    margin-top: -20px;
     margin-left: 20px;
     font-size: 25px;
     font-weight: bold;
     text-align: left;
 }
 
+.random-picks .picks form button .card .types {
+    display: flex;
+}
 
+.random-picks .picks form button .card .types .type {
+    font-size: 12px;
+    width: 80px;
+    height: 20px;
+    margin: 5px;
+    text-align: center;
+    /* background-color: red; */
+    border-radius: 5px;
+}
+
+
+
+/* Media queries for device widths */
 @media (max-width: 760px) {
     .search-div input[type="search"], .random-picks button[type="submit"] {
         width: calc(100% - 100px);
     }
+}
 
+@media (max-width: 990px) {
     .random-picks .picks {
-        padding: 0;
+        padding: 0px;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2 auto);
     }
 }

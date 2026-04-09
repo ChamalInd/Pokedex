@@ -1,10 +1,13 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from flask_session import Session
-from helper import pokemon_details, gather_weakness, index_pokemons
+from helper import pokemon_details, gather_weakness, index_pokemons, search_colors
 
 # configure app
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+# Custom filter
+app.jinja_env.filters["color"] = search_colors
 
 # configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
