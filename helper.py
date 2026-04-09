@@ -114,7 +114,12 @@ def index_pokemons():
 async def get_pokemon_data(client, id):
     resp = await client.get(f"https://pokeapi.co/api/v2/pokemon/{id}")
     data = resp.json()
-    return [data['id'], data['name'], data['sprites']['other']['official-artwork']['front_default'], [t['type']['name'].capitalize() for t in data['types']]]
+    return [
+        format(2, data['id']),
+        data['name'].capitalize(), 
+        data['sprites']['other']['official-artwork']['front_default'], 
+        [t['type']['name'].capitalize() for t in data['types']]
+    ]
 
 
 async def syncronize_request(ids):

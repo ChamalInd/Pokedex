@@ -7,3 +7,80 @@
 {% block title %}
 Pokédex : {{ data["name"] }}
 {% endblock %}
+
+{% block main %}
+<div class="identity-bar">
+    <p class="name">{{ data["name"] }}</p>
+    <p class="id">{{ data["id"] }}</p>
+</div>
+
+<div class="details">
+    {% set norm = data['norm-img-url'] %}
+    {% set shiny = data['shiny-img-url'] %}
+    <div class="item">
+        <img id="pokemon-img" src="{{ norm }}" data-norm="{{ norm }}" data-shiny="{{ shiny }}" alt="{{ norm }}">
+    </div>
+
+    <div class="item">
+        <div class="button-div">
+            <p>Versions: </p>
+            <button class="img-btn" onclick="swapImage('norm')">
+                <img src="/static/pokeball.png" alt="">
+            </button>
+            <button class="img-btn" onclick="swapImage('shiny')">
+                <img src="/static/pokeball-shiny.png" alt="">
+            </button>
+        </div>
+        <table>
+            <tr>
+                <th>Height</th>
+                <th>Weight</th>
+            </tr>
+            <tr>
+                <td>{{ data["height"] }}</td>
+                <td>{{ data["weight"] }}</td>
+            </tr>
+            <tr>
+                <th colspan="2">Abilities</th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <ul>
+                        {% for ability in data["abilities"] %}
+                        <li>{{ ability }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div>
+    <div>
+        <p>Random Facts</p>
+        <button><i class="fa-solid fa-arrows-rotate"></i></button>
+    </div>
+    <div>
+        <p>{{ data["flavours"][2] }}</p>
+    </div>
+</div>
+
+<div>
+    <p>Moves</p>
+    <ul>
+        {% for move in data["moves"] %}
+        <li>{{ move }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div>
+    <p>Evolution</p>
+    <ul>
+        {% for evo in data["evolution"] %}
+        <li>{{ evo }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

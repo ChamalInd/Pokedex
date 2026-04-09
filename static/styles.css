@@ -18,15 +18,15 @@ button[type="submit"]:hover {
     background-color: #b15c33;
 }
 
-
-/* Styles for search area */
-.search-div {
+.search-div, .identity-bar {
     background-color: #313131;
     width: 100%;
     padding: 30px;
     text-align: center;
 }
 
+
+/* Styles for search area */
 .search-div div {
     display: flex;
     width: 100%;
@@ -139,12 +139,122 @@ button[type="submit"]:hover {
     border-radius: 5px;
 }
 
+/* Styling Pokemon name bar */
+.identity-bar {
+    display: flex;
+    vertical-align: auto;
+    justify-content: center;
+    align-items: center;
+}
 
+.identity-bar .name, .identity-bar .id {
+    font-weight: bolder;
+    font-size: 40px;
+    margin: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 60px;
+    line-height: 60px;
+}
+
+.identity-bar .name {
+    color: white;
+}
+
+.identity-bar .id {
+    color: #acacac;
+}
+
+.details {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(1, auto);
+}
+
+.details .item {
+    padding: 10px;
+}
+
+.details .item img {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.details .item .button-div {
+    display: flex;
+}
+
+.details .item .button-div p {
+    font-size: 20px;
+    font-weight: bolder;
+    height: 40px;
+    line-height: 40px;
+    margin-right: 10px;
+}
+
+.details .item .button-div .img-btn {
+    background: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    display: inline-flex;
+    margin-right: 10px;
+}
+
+.details .item .button-div .img-btn img {
+    width: 130%;
+    height: auto;
+    
+}
+
+.details .item table {
+    width: 80%;
+    margin-top: 10%;
+    background-color: #de7340;
+    border-radius: 10px;
+}
+
+.details .item table tr th, .details .item table tr td {
+    padding-left: 40px;
+    font-weight: 500;
+}
+
+.details .item table tr th {
+    font-size: 15px;
+    color: white;
+    padding-top: 10px;
+}
+
+.details .item table tr td {
+    font-size: 20px;
+}
+
+.details .item table tr td ul {
+    list-style: none;
+    margin-left: -30px;
+}
 
 /* Media queries for device widths */
 @media (max-width: 760px) {
     .search-div input[type="search"], .random-picks button[type="submit"] {
         width: calc(100% - 100px);
+    }
+
+    .details {
+        grid-template-columns: repeat(1, auto);
+    }
+
+    .details .item img {
+        padding: 0;
+    }
+
+    .details .item table {
+        width: 100%;
+        margin: 0;
     }
 }
 
