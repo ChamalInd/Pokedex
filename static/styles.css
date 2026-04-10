@@ -25,16 +25,18 @@ button:hover {
     text-align: center;
 }
 
-.next-action {
-    width: 100%;
-    text-align: center;
-    margin-top: 40px;
-    margin-bottom: 40px;
+.types {
+    display: flex;
 }
 
-.next-action button {
-    width: 50px;
-    height: 50px;
+.types .type {
+    font-size: 12px;
+    width: 80px;
+    height: 20px;
+    margin: 5px;
+    text-align: center;
+    /* background-color: red; */
+    border-radius: 5px;
 }
 
 
@@ -135,20 +137,6 @@ button:hover {
     font-size: 25px;
     font-weight: bold;
     text-align: left;
-}
-
-.random-picks .picks form button .card .types {
-    display: flex;
-}
-
-.random-picks .picks form button .card .types .type {
-    font-size: 12px;
-    width: 80px;
-    height: 20px;
-    margin: 5px;
-    text-align: center;
-    /* background-color: red; */
-    border-radius: 5px;
 }
 
 /* Styling Pokemon name bar */
@@ -255,78 +243,54 @@ button:hover {
     text-decoration: none;
 }
 
-.facts, .moves {
-    margin-top: 50px;
-    margin-left: 20%;
-    margin-right: 20%;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #56a5d2;
-}
-
-.facts {
+.types-weakness {
     display: grid;
-    grid-template-columns: repeat(1, 100%);
-    grid-template-rows: repeat(2, auto);
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(1, auto);
 }
 
-.facts .facts-top {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.facts .facts-top p, .facts .facts-top button {
-    height: 30px;
-    margin: 5px;
-}
-
-.facts .facts-top p, .moves p {
+.types-weakness div {
+    padding: 50px;
     text-align: center;
+}
+
+.types-weakness div p {
     font-size: 30px;
     font-weight: bolder;
-    color: white;
+}
+
+.types-weakness div .types {
+    justify-content: center;
+    align-content: center;
+    margin-top: -50px;
+}
+
+.types-weakness div .types .type {
+    height: 30px;
+    width: 100px;
+    font-size: 18px;
     line-height: 30px;
 }
 
-.facts .facts-top button {
-    width: 30px;
-}
-
-.facts .facts-bottom p {
-    font-size: 20px;
-    color: #313131;
-    margin: 10px;
-    font-weight: bolder;
-}
-
-.moves ul {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    height: 100px;
-    list-style: none;
-    font-weight: bolder;
-}
-
-.moves ul li {
-    width: calc(100% / 3);
-}
-
-.moves ul li a {
-    color: black;
-    text-decoration: none;
-}
-
-.moves .btn-grp {
-    text-align: center;
-
-}
 
 /* Media queries for device widths */
 @media (max-width: 760px) {
     .search-div input[type="search"], .random-picks button[type="submit"] {
         width: calc(100% - 100px);
+    }
+
+    .types-weakness {
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-rows: repeat(2 auto);
+    }
+}
+
+@media (max-width: 990px) {
+    .random-picks .picks {
+        padding: 0px;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2 auto);
     }
 
     .details {
@@ -340,18 +304,5 @@ button:hover {
     .details .item table {
         width: 100%;
         margin: 0;
-    }
-
-    .facts, .moves {
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-}
-
-@media (max-width: 990px) {
-    .random-picks .picks {
-        padding: 0px;
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(2 auto);
     }
 }
