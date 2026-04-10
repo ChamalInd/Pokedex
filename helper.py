@@ -63,55 +63,6 @@ def get_measures(name):
         # getting pokemon abilities
         abilities = get_dict(pokemon_data['abilities'], 'ability')
 
-        return {
-            'height': height,
-            'weight': weight,
-            'abilities': abilities
-        }
-    
-    except Exception as e:
-        print(e)
-
-    return None
-
-
-def get_facts_moves(name):
-    try:
-        # getting data from api
-        pokemon_data = lookup(f'pokemon/{name.lower()}')
-
-        # getting pokemon species
-        species = pokemon_data['species']['name']
-
-        # getting species data
-        species_data = lookup(f'pokemon-species/{species}')
-
-        # getting pokemon moves
-        moves = get_dict(pokemon_data['moves'], 'move')
-        
-        # getting flavour texts
-        flavours = []
-        for flv_text in species_data['flavor_text_entries']:
-            if flv_text['language']['name'] == 'en':
-                flavours.append(f'{flv_text['flavor_text']}'.replace('\n', ''))
-        
-
-        return {
-            'moves': moves,
-            'flavours': flavours
-        }
-    
-    except Exception as e:
-        print(e)
-
-    return None
-
-
-def get_types_weakness(name):
-    try:
-        # getting data from api
-        pokemon_data = lookup(f'pokemon/{name.lower()}')
-
         # getting types
         types = [t['type']['name'].capitalize() for t in pokemon_data['types']]
         
@@ -119,6 +70,9 @@ def get_types_weakness(name):
         weakness = search_weakness(types)
 
         return {
+            'height': height,
+            'weight': weight,
+            'abilities': abilities,
             'types': types,
             'weakness': weakness
         }

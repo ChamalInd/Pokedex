@@ -59,12 +59,33 @@
     </div>
 </div>
 
-<div class="next-action">
-    <form action="/pokemon-tacticts" method="post">
-        <input type="text" hidden name="name" value="{{ basic['name'] }}">
-        <button type="submit">
-            <i class="fa-solid fa-angle-down"></i>
-        </button>
-    </form>
+<div>
+    <div>
+        <p>Types</p>
+        <ul>
+            {% for type in measures["types"] %}
+            <li>{{ type }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div>
+        <p>Weakness</p>
+        <ul>
+            {% for weak in measures["weakness"] %}
+            <li>{{ weak }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+<div>
+    <p>Evolution</p>
+    <ul>
+        {% set len = (evolution["evolution"] | length) %}
+        {% for i in range(0, len) %}
+        <li>{{ evolution["evolution"][i] }} {{ evolution["evo-basics"][i] }}</li>
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}
