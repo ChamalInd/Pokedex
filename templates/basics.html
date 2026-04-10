@@ -1,22 +1,22 @@
 {% extends "layout.html" %}
 
 {% block icon %}
-{{ data['norm-img-url'] }}
+{{ basic['norm-img-url'] }}
 {% endblock %}
 
 {% block title %}
-Pokédex : {{ data["name"] }}
+{{ basic["name"] }} | Pokédex
 {% endblock %}
 
 {% block main %}
 <div class="identity-bar">
-    <p class="name">{{ data["name"] }}</p>
-    <p class="id">{{ data["id"] }}</p>
+    <p class="name">{{ basic["name"] }}</p>
+    <p class="id">{{ basic["id"] }}</p>
 </div>
 
 <div class="details">
-    {% set norm = data['norm-img-url'] %}
-    {% set shiny = data['shiny-img-url'] %}
+    {% set norm = basic['norm-img-url'] %}
+    {% set shiny = basic['shiny-img-url'] %}
     <div class="item">
         <img id="pokemon-img" src="{{ norm }}" data-norm="{{ norm }}" data-shiny="{{ shiny }}" alt="{{ norm }}">
     </div>
@@ -37,8 +37,8 @@ Pokédex : {{ data["name"] }}
                 <th>Weight</th>
             </tr>
             <tr>
-                <td>{{ data["height"] }}</td>
-                <td>{{ data["weight"] }}</td>
+                <td>{{ measures["height"] }}</td>
+                <td>{{ measures["weight"] }}</td>
             </tr>
             <tr>
                 <th colspan="2">Abilities</th>
@@ -46,8 +46,11 @@ Pokédex : {{ data["name"] }}
             <tr>
                 <td colspan="2">
                     <ul>
-                        {% for ability in data["abilities"] %}
-                        <li>{{ ability }}</li>
+                        {% for ability in measures["abilities"] %}
+                        <li>
+                            <a href="#" data-bs-toggle="tooltip" data-bs-title="{{ ability['desc'] }}">{{ ability["name"] }}</a>
+                        </li>
+                        
                         {% endfor %}
                     </ul>
                 </td>
@@ -56,31 +59,12 @@ Pokédex : {{ data["name"] }}
     </div>
 </div>
 
-<div>
-    <div>
-        <p>Random Facts</p>
-        <button><i class="fa-solid fa-arrows-rotate"></i></button>
-    </div>
-    <div>
-        <p>{{ data["flavours"][2] }}</p>
-    </div>
-</div>
-
-<div>
-    <p>Moves</p>
-    <ul>
-        {% for move in data["moves"] %}
-        <li>{{ move }}</li>
-        {% endfor %}
-    </ul>
-</div>
-
-<div>
-    <p>Evolution</p>
-    <ul>
-        {% for evo in data["evolution"] %}
-        <li>{{ evo }}</li>
-        {% endfor %}
-    </ul>
+<div class="next-action">
+    <form action="/pokemon-tacticts" method="post">
+        <input type="text" hidden name="name" value="{{ basic['name'] }}">
+        <button type="submit">
+            <i class="fa-solid fa-angle-down"></i>
+        </button>
+    </form>
 </div>
 {% endblock %}

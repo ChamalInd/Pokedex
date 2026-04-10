@@ -14,7 +14,7 @@ Pokédex
         <img src="/static/pokeball.png" alt="">
         <h1>PokéDex</h1>
     </div>
-    <form action="/pokemon" method="post">
+    <form action="/pokemon-basics" method="post">
         <input autofocus autocomplete="off" type="search" name="name" placeholder="Search your favourite pokémon">
         <button name="action" value="search" type="submit">
             <i class="fa-solid fa-magnifying-glass"></i>
@@ -31,7 +31,7 @@ Pokédex
 
     <div class="picks">
         {% for pokemon in pokemons %}
-        <form action="/pokemon" method="post">
+        <form action="/pokemon-basics" method="post">
             <input type="text" hidden name="name" value="{{ pokemon[1] }}">
             <button type="submit" name="action" value="submit">
                 <div class="card">

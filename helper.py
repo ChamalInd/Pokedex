@@ -27,8 +27,109 @@ COLOR_SCHEME = {
 }
 
 
-# ordering neccessary data
-def pokemon_details(name):
+# getting neccessary data
+def get_basic_data(name):
+    try:
+        # getting data from api
+        pokemon_data = lookup(f'pokemon/{name.lower()}')
+
+        # converting id into correct form
+        id = format(2, pokemon_data['id'])
+
+        return {
+            'id': id,
+            'name': pokemon_data['name'].capitalize(),
+            'norm-img-url': pokemon_data['sprites']['other']['official-artwork']['front_default'],
+            'shiny-img-url': pokemon_data['sprites']['other']['official-artwork']['front_shiny']
+        }
+    
+    except Exception as e:
+        print(e)
+
+    return None
+
+
+def get_measures(name):
+    try:
+        # getting data from api
+        pokemon_data = lookup(f'pokemon/{name.lower()}')
+
+        # converting height into feet and inches
+        height = format(0, pokemon_data['height'])
+
+        # converting weight into pounds
+        weight = format(1, pokemon_data['weight'])
+
+        # getting pokemon abilities
+        abilities = get_dict(pokemon_data['abilities'], 'ability')
+
+        return {
+            'height': height,
+            'weight': weight,
+            'abilities': abilities
+        }
+    
+    except Exception as e:
+        print(e)
+
+    return None
+
+
+def get_facts_moves(name):
+    try:
+        # getting data from api
+        pokemon_data = lookup(f'pokemon/{name.lower()}')
+
+        # getting pokemon species
+        species = pokemon_data['species']['name']
+
+        # getting species data
+        species_data = lookup(f'pokemon-species/{species}')
+
+        # getting pokemon moves
+        moves = get_dict(pokemon_data['moves'], 'move')
+        
+        # getting flavour texts
+        flavours = []
+        for flv_text in species_data['flavor_text_entries']:
+            if flv_text['language']['name'] == 'en':
+                flavours.append(f'{flv_text['flavor_text']}'.replace('\n', ''))
+        
+
+        return {
+            'moves': moves,
+            'flavours': flavours
+        }
+    
+    except Exception as e:
+        print(e)
+
+    return None
+
+
+def get_types_weakness(name):
+    try:
+        # getting data from api
+        pokemon_data = lookup(f'pokemon/{name.lower()}')
+
+        # getting types
+        types = [t['type']['name'].capitalize() for t in pokemon_data['types']]
+        
+        # search for weakness
+        weakness = search_weakness(types)
+
+        return {
+            'types': types,
+            'weakness': weakness
+        }
+    
+    except Exception as e:
+        print(e)
+
+    return None
+
+
+def get_evolution(name):
     try:
         # getting data from api
         pokemon_data = lookup(f'pokemon/{name.lower()}')
@@ -43,33 +144,6 @@ def pokemon_details(name):
         evol_url = species_data['evolution_chain']['url'].replace('https://pokeapi.co/api/v2/', '')
         evo_data = lookup(evol_url)
 
-        # getting pokemon abilities
-        abilities = [ability['ability']['name'].capitalize() for ability in pokemon_data['abilities']]
-
-        # getting pokemon moves
-        moves = [move['move']['name'].capitalize() for move in pokemon_data['moves']]
-        
-        # getting types
-        types = [t['type']['name'].capitalize() for t in pokemon_data['types']]
-        
-        # converting height into feet and inches
-        height = format(0, pokemon_data['height'])
-
-        # converting weight into pounds
-        weight = format(1, pokemon_data['weight'])
-
-        # formatting the pokemon id
-        id = format(2, pokemon_data['id'])
-        
-        # search for weakness
-        weakness = search_weakness(types)
-        
-        # getting flavour texts
-        flavours = []
-        for flv_text in species_data['flavor_text_entries']:
-            if flv_text['language']['name'] == 'en':
-                flavours.append(flv_text['flavor_text'])
-
         # getting evolution chain
         evoloution = []
         current_link = evo_data['chain']
@@ -81,25 +155,36 @@ def pokemon_details(name):
             else:
                 current_link = None
 
+        # get basic data of pokemons in evolution
+        evo_basics = []
+        for name in evoloution:
+            dict = get_basic_data(name)
+            evo_basics.append(dict)
+
         return {
-            'id': id,
-            'name': pokemon_data['name'].capitalize(),
-            'norm-img-url': pokemon_data['sprites']['other']['official-artwork']['front_default'],
-            'shiny-img-url': pokemon_data['sprites']['other']['official-artwork']['front_shiny'],
-            'height': height,
-            'weight': weight,
-            'abilities': abilities,
-            'moves': moves,
-            'types': types,
-            'weakness': weakness,
             'evolution': evoloution,
-            'flavours': flavours
+            'evo-basics': evo_basics
         }
     
     except Exception as e:
         print(e)
     
     return None
+
+
+# get dictionaries
+def get_dict(data_set, keyword):
+    array = []
+    for item in data_set:
+        name = item[keyword]['name'].capitalize()
+        data = lookup(item[keyword]['url'].replace('https://pokeapi.co/api/v2/', ''))
+        for effect in data['effect_entries']:
+            if effect['language']['name'] == 'en':
+                description = effect['short_effect']
+        dict = {'name': name, 'desc': description}
+        array.append(dict)
+
+    return array
 
 
 # get images and details of index page pokemons
