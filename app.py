@@ -1,14 +1,20 @@
 from flask import Flask, request, render_template, redirect, flash
 from helper import (
     get_basic_data, get_measures, get_evolution, 
-    gather_weakness, index_pokemons, search_colors, format
-    )
+    gather_weakness, index_pokemons, search_colors,
+    format, syncronize_request
+)
 
-import random
+import sqlite3
+import asyncio
 
 # configure app
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+# configuring database
+con = sqlite3.connect("pokedex.db", check_same_thread=False)
+cursor = con.cursor()
 
 # Custom filter
 app.jinja_env.filters["color"] = search_colors
@@ -47,10 +53,55 @@ def pokemon():
         basic = get_basic_data(name)
         measures = get_measures(name)
         evolution = get_evolution(name)
-        if basic != None and measures != None:
-            return render_template('pokemon.html', basic=basic, measures=measures, evolution=evolution)
+
+        favs = cursor.execute('SELECT * FROM favourites').fetchall()
+        for i in favs:
+            if basic["id"] == i[0]:
+                isfav = True
+                break
+            else:
+                isfav = False
+        
+        if basic != None and measures != None and evolution != None:
+            return render_template('pokemon.html', basic=basic, measures=measures, evolution=evolution, isfav=isfav)
         else:
             flash(f'Invalid Pokémon name {name}')
     else:
         flash('Name cannot be empty')
     return redirect('/')
+
+
+@app.route('/favourites', methods=['POST'])
+def show_favourites():
+    favs = cursor.execute('SELECT * FROM favourites').fetchall()
+    ids = []
+    for i in favs:
+        ids.append(i[0])
+    data = asyncio.run(syncronize_request(ids))
+    print(data)
+    return render_template('favourites.html', pokemons=data)
+
+
+@app.route('/set-favourites', methods=['POST'])
+def set_favourite():
+    if request.method == 'POST':
+        id = int(request.form.get('id'))
+
+        favs = cursor.execute('SELECT * FROM favourites').fetchall()
+
+        for i in favs:
+            if id == i[0]:
+                isfav = True
+                break
+            else:
+                isfav = False
+
+        if not isfav:
+            cursor.execute('INSERT INTO favourites (id) VALUES(?)', (id, ))
+            con.commit()
+            flash('Successfully added Pokémon to the Favourites.')
+        else:
+            cursor.execute('DELETE FROM favourites WHERE id = ?', (id, ))
+            con.commit()
+            flash('Successfully removed Pokémon from the Favourites.')
+        return redirect('/')

@@ -148,8 +148,17 @@ button:hover {
 }
 
 .identity-bar .cornors {
+    position: absolute;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+.identity-bar .left {
+    left: 10px;
+}
+
+.identity-bar .right {
+    right: 10px;
 }
 
 .identity-bar .cornors form button {
@@ -160,8 +169,23 @@ button:hover {
 
 .identity-bar .middle {
     display: flex;
-    padding-left: calc(50% - 210px);
-    padding-right: calc(50% - 210px);
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.identity-bar .middle form {
+    width: 100%;
+}
+
+.identity-bar .middle button {
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    width: 100%;
 }
 
 .identity-bar .middle .name, .identity-bar .middle .id {
@@ -189,6 +213,54 @@ button:hover {
     border-radius: 15px;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+/* Favourite button */
+.fav {
+    position: absolute;
+    top: 130px;
+    left: 50px;
+    padding: 10px;
+}
+
+.fav-btn {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+}
+
+.fav button, .fav-btn {
+    font-weight: bolder;
+    font-size: 30px;
+    background: none;
+    color: #313131;
+}
+
+.fav-btn:hover {
+    background: none;
+}
+
+.fav-btn {
+    color: #acacac;
+}
+
+.title {
+    background-color: #313131;
+    height: 100px;
+}
+
+.title form {
+    width: 100%;
+    text-align: center;
+}
+
+.title button {
+    font-size: 40px;
+    background: none;
+    line-height: 100px;
+    text-align: center;
+    color: white;
+    font-weight: bolder;
 }
 
 /* Pokemon details */
@@ -349,6 +421,10 @@ button:hover {
 @media (max-width: 760px) {
     .main {
         margin: 10px;
+    }
+
+    .fav {
+        left: 10px;
     }
     
     .search-div input[type="search"], .random-picks button[type="submit"] {

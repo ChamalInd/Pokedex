@@ -5,36 +5,17 @@
 {% endblock %}
 
 {% block title %}
-Pokédex
+Favourites | Pokédex
 {% endblock %}
 
 {% block main %}
-<form action="/favourites" method="post">
-    <button type="submit" class="fav-btn">
-        <i class="fa-solid fa-star"></i>
-    </button>
-</form>
-
-<div class="search-div">
-    <div>
-        <img src="/static/pokeball.png" alt="">
-        <h1>PokéDex</h1>
-    </div>
-    <form action="/pokemon" method="post">
-        <input autofocus autocomplete="off" type="search" name="name" placeholder="Search your favourite pokémon">
-        <button name="action" value="search" type="submit">
-            <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
+<div class="title">
+    <form action="/" method="action">
+        <button type="submit">Favourites</button>
     </form>
 </div>
 
 <div class="random-picks">
-    <form action="/" method="post">
-        <button name="action" value="refresh" type="submit">
-            <i class="fa-solid fa-arrows-rotate"></i>&nbsp;Surprise Me!
-        </button>
-    </form>
-
     <div class="picks">
         {% for pokemon in pokemons %}
         <form action="/pokemon" method="post">

@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 
 {% block icon %}
-{{ basic['norm-img-url'] }}
+{{ basic['img'] }}
 {% endblock %}
 
 {% block title %}
@@ -21,7 +21,7 @@
 
 {% block main %}
 <div class="identity-bar">
-    <div class="cornors">
+    <div class="cornors left">
         <form action="/pokemon" method="post">
             <input type="text" name="name" value='{{ (basic["id"] | int) - 1 }}' hidden>
             <button type="submit">
@@ -30,10 +30,14 @@
         </form>
     </div>
     <div class="middle">
-        <p class="name">{{ basic["name"] }}</p>
-        <p class="id">{{ basic["id"] | format(2) }}</p>
+        <form action="/" method="post">
+            <button type="submit">
+                <p class="name">{{ basic["name"] }}</p>
+                <p class="id">{{ basic["id"] | format(2) }}</p>
+            </button>
+        </form>
     </div>
-    <div class="cornors">
+    <div class="cornors right">
         <form action="/pokemon" method="post">
             <input type="text" name="name" value='{{ (basic["id"] | int) + 1 }}' hidden>
             <button type="submit">
@@ -46,6 +50,19 @@
 <div class="main">
     <div class="pokemon">
         <img id="pokemon-img" src="{{ basic['img'] }}" alt="{{ basic['name'] }}">
+    </div>
+
+    <div class="fav">
+        <form action="/set-favourites" method="post">
+            <input type="text" name="id" value="{{ basic['id'] }}" hidden>
+            <button type="submit">
+                {% if isfav %}
+                    <i class="fa-solid fa-star"></i>
+                {% else %}
+                    <i class="fa-regular fa-star"></i>
+                {% endif %}
+            </button>
+        </form>
     </div>
 
     <div class="details">
