@@ -36,7 +36,7 @@ Pokédex
             <button type="submit" name="action" value="submit">
                 <div class="card">
                     <img src="{{ pokemon[2] }}" alt="{{ pokemon[1] }}">
-                    <p class="id">{{ pokemon[0] }}</p>
+                    <p class="id">{{ pokemon[0] | format(2) }}</p>
                     <p class="name">{{ pokemon[1] }}</p>
                     <div class="types">
                         {% for type in pokemon[3] %}

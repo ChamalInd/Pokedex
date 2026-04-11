@@ -8,29 +8,47 @@
 {{ basic["name"] }} | Pokédex
 {% endblock %}
 
+{% set len = (evolution | length) %}
+{% if len == 1 %}
+{% set padding = 40 %}
+{% endif %}
+{% if len == 2 %}
+{% set padding = 30 %}
+{% endif %}
+{% if len == 3 %}
+{% set padding = 20 %}
+{% endif %}
+
 {% block main %}
 <div class="identity-bar">
-    <p class="name">{{ basic["name"] }}</p>
-    <p class="id">{{ basic["id"] }}</p>
+    <div class="cornors">
+        <form action="/pokemon" method="post">
+            <input type="text" name="name" value='{{ (basic["id"] | int) - 1 }}' hidden>
+            <button type="submit">
+                &#10094;
+            </button>
+        </form>
+    </div>
+    <div class="middle">
+        <p class="name">{{ basic["name"] }}</p>
+        <p class="id">{{ basic["id"] | format(2) }}</p>
+    </div>
+    <div class="cornors">
+        <form action="/pokemon" method="post">
+            <input type="text" name="name" value='{{ (basic["id"] | int) + 1 }}' hidden>
+            <button type="submit">
+                &#10095;
+            </button>
+        </form>
+    </div>
 </div>
 
-<div class="details">
-    {% set norm = basic['norm-img-url'] %}
-    {% set shiny = basic['shiny-img-url'] %}
-    <div class="item">
-        <img id="pokemon-img" src="{{ norm }}" data-norm="{{ norm }}" data-shiny="{{ shiny }}" alt="{{ norm }}">
+<div class="main">
+    <div class="pokemon">
+        <img id="pokemon-img" src="{{ basic['img'] }}" alt="{{ basic['name'] }}">
     </div>
 
-    <div class="item">
-        <div class="button-div">
-            <p>Versions: </p>
-            <button class="img-btn" onclick="swapImage('norm')">
-                <img src="/static/pokeball.png" alt="">
-            </button>
-            <button class="img-btn" onclick="swapImage('shiny')">
-                <img src="/static/pokeball-shiny.png" alt="">
-            </button>
-        </div>
+    <div class="details">
         <table>
             <tr>
                 <th>Height</th>
@@ -51,43 +69,53 @@
                             <a href="#" data-bs-toggle="tooltip" data-bs-title="{{ ability['desc'] }}">{{
                                 ability["name"] }}</a>
                         </li>
-
                         {% endfor %}
                     </ul>
                 </td>
             </tr>
         </table>
     </div>
+
+    <div class="types-weakness">
+        <div>
+            <p>Types</p>
+            <div class="types">
+                {% for type in measures["types"] %}
+                <p class="type" style="background-color: {{ type | color }}">{{ type }}</p>
+                {% endfor %}
+            </div>
+            </ul>
+        </div>
+        <div>
+            <p>Weakness</p>
+            <div class="types">
+                {% for weak in measures["weakness"] %}
+                <p class="type" style="background-color: {{ weak | color }}">{{ weak }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="types-weakness">
-    <div>
-        <p>Types</p>
-        <div class="types">
-            {% for type in measures["types"] %}
-            <p class="type" style="background-color: {{ type | color }}">{{ type }}</p>
-            {% endfor %}
-        </div>
-        </ul>
-    </div>
-    <div>
-        <p>Weakness</p>
-        <div class="types">
-            {% for weak in measures["weakness"] %}
-            <p class="type" style="background-color: {{ weak | color }}">{{ weak }}</p>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-
-
-<div>
+<div class="evolution" style="--spacing-unit: {{ padding }}%">
     <p>Evolution</p>
-    <ul>
-        {% set len = (evolution["evolution"] | length) %}
+    <div class="evol-cards">
         {% for i in range(0, len) %}
-        <li>{{ evolution["evolution"][i] }} {{ evolution["evo-basics"][i] }}</li>
-        {% endfor %}
-    </ul>
+        <form action="/pokemon" method="post">
+            <input type="text" name="name" value="{{ evolution[i]['name'] }}" hidden>
+            <button type="submit">
+                <div class="card">
+                    <img src='{{evolution[i]["img"] }}' alt='{{ evolution[i]["name"] }}'>
+                    <div>
+                        <p class="name">{{ evolution[i]["name"] }}</p>
+                        <p class="id">{{ evolution[i]["id"] | format(2) }}</p>
+                    </div>
+                </div>
+            </button>
+        </form>
+        {% if i < len - 1 %} <p class="seperator">&#10095;</p>
+            {% endif %}
+            {% endfor %}
+    </div>
 </div>
 {% endblock %}

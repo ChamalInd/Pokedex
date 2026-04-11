@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect, flash
 from helper import (
     get_basic_data, get_measures, get_evolution, 
-    gather_weakness, index_pokemons, search_colors
+    gather_weakness, index_pokemons, search_colors, format
     )
 
 import random
@@ -12,6 +12,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 # Custom filter
 app.jinja_env.filters["color"] = search_colors
+app.jinja_env.filters["format"] = format
 
 # gather weakness of all pokemons at the begining
 gather_weakness()

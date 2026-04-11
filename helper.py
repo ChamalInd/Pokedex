@@ -31,16 +31,15 @@ COLOR_SCHEME = {
 def get_basic_data(name):
     try:
         # getting data from api
-        pokemon_data = lookup(f'pokemon/{name.lower()}')
-
-        # converting id into correct form
-        id = format(2, pokemon_data['id'])
+        if name.isnumeric():
+            pokemon_data = lookup(f'pokemon/{name.lower()}')
+        else:
+            pokemon_data = lookup(f'pokemon/{name}')
 
         return {
-            'id': id,
+            'id': pokemon_data['id'],
             'name': pokemon_data['name'].capitalize(),
-            'norm-img-url': pokemon_data['sprites']['other']['official-artwork']['front_default'],
-            'shiny-img-url': pokemon_data['sprites']['other']['official-artwork']['front_shiny']
+            'img': pokemon_data['sprites']['other']['official-artwork']['front_default']
         }
     
     except Exception as e:
@@ -52,13 +51,16 @@ def get_basic_data(name):
 def get_measures(name):
     try:
         # getting data from api
-        pokemon_data = lookup(f'pokemon/{name.lower()}')
+        if name.isnumeric():
+            pokemon_data = lookup(f'pokemon/{name.lower()}')
+        else:
+            pokemon_data = lookup(f'pokemon/{name}')
 
         # converting height into feet and inches
-        height = format(0, pokemon_data['height'])
+        height = format(pokemon_data['height'], 0)
 
         # converting weight into pounds
-        weight = format(1, pokemon_data['weight'])
+        weight = format(pokemon_data['weight'], 1)
 
         # getting pokemon abilities
         abilities = get_dict(pokemon_data['abilities'], 'ability')
@@ -86,7 +88,10 @@ def get_measures(name):
 def get_evolution(name):
     try:
         # getting data from api
-        pokemon_data = lookup(f'pokemon/{name.lower()}')
+        if name.isnumeric():
+            pokemon_data = lookup(f'pokemon/{name.lower()}')
+        else:
+            pokemon_data = lookup(f'pokemon/{name}')
 
         # getting pokemon species
         species = pokemon_data['species']['name']
@@ -115,10 +120,7 @@ def get_evolution(name):
             dict = get_basic_data(name)
             evo_basics.append(dict)
 
-        return {
-            'evolution': evoloution,
-            'evo-basics': evo_basics
-        }
+        return evo_basics
     
     except Exception as e:
         print(e)
@@ -154,7 +156,7 @@ async def get_pokemon_data(client, id):
     resp = await client.get(f"https://pokeapi.co/api/v2/pokemon/{id}")
     data = resp.json()
     return [
-        format(2, data['id']),
+        data['id'],
         data['name'].capitalize(), 
         data['sprites']['other']['official-artwork']['front_default'], 
         [t['type']['name'].capitalize() for t in data['types']]
@@ -215,7 +217,7 @@ def gather_weakness():
 
 
 # format numbers
-def format(type, number):
+def format(number, type):
     if type == 0:
         number = str(round(((number / 10) * 39.37) / 12, 1))
         n1 = int(number.split('.')[0])
@@ -227,4 +229,4 @@ def format(type, number):
         return f'{number} lbs'
 
     elif type == 2:
-        return f'#{number:04}'
+        return f'#{int(number):04}'
