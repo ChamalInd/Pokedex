@@ -2,7 +2,11 @@
 #### Vide Demo: https://youtu.be/5hIkzvLd6DA
 #### Project: https://github.com/ChamalInd/Pokedex.git
 
-#### A Simple and Interactive Pokédex inspired by the PokéDex on Pokémon website.
+
+### Project Overview
+
+A Simple and Interactive Pokédex inspired by the PokéDex on Pokémon website.
+You can view it by clickint [here](https://www.pokemon.com/us/pokedex)
 
 ### Features
 - Can view pokemon's details (Name, Physical Measure, Abilities, ...)
@@ -29,7 +33,12 @@
     git clone
     cd pokedex
     ```
-- Then move inside the project folder
+- Then install all the requirements
+    ```
+    pip install -r requirement.txt
+    ```
 
-### Running the App
+#### Running the App
 - Run `Flask run` on your terminal to and click the link provided to view the website.
+
+### Project 
