@@ -1,6 +1,6 @@
 # PokéDex
 #### Vide Demo: https://youtu.be/5hIkzvLd6DA
-#### Projcet: https://github.com/ChamalInd/Pokedex.git
+#### Project: https://github.com/ChamalInd/Pokedex.git
 
 #### A Simple and Interactive Pokédex inspired by the PokéDex on Pokémon website.
 
@@ -18,15 +18,17 @@
 ### Getting Started
 
 #### Prerequisites
-- Make sure you have Python installed
-- Then install the following packages
-    - Flask
-    - httpx
-    - requests
-- Make sure SQLite3 is installed on your system
+- Make sure you have Python installed. You can check by running
+    ```python --vesion```
+- Make sure you have SQLite3 installed. You can check by running
+    ```sqlite3 --vesion```
 
 #### Installation
-- Clone the project to your system using `git clone`
+- Clone the project to your system
+    ```
+    git clone
+    cd pokedex
+    ```
 - Then move inside the project folder
 
 ### Running the App
