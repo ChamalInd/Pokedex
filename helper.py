@@ -122,7 +122,11 @@ def get_evolution(inp):
         except:
             known_index = evoloution.index(species.capitalize())
         for i in range(len(evoloution)):
-            evoloution[i] = poke_id + (i - known_index)
+            try:
+                data = get_basic_data(evoloution[i])
+                evoloution[i] = data["id"]
+            except:
+                evoloution[i] = poke_id + (i - known_index)
 
         print(evoloution)
 
