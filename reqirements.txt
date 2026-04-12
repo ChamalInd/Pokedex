@@ -1,0 +1,6 @@
+Flask
+sqlite3
+asyncio
+requests
+random
+httpx

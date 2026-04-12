@@ -1,20 +1,10 @@
 {% extends "layout.html" %}
 
-{% block icon %}
-/static/pokeball.png
-{% endblock %}
-
 {% block title %}
 Pokédex
 {% endblock %}
 
 {% block main %}
-<form action="/favourites" method="post">
-    <button type="submit" class="fav-btn">
-        <i class="fa-solid fa-star"></i>
-    </button>
-</form>
-
 <div class="search-div">
     <div>
         <img src="/static/pokeball.png" alt="">
@@ -29,11 +19,19 @@ Pokédex
 </div>
 
 <div class="random-picks">
-    <form action="/" method="post">
-        <button name="action" value="refresh" type="submit">
-            <i class="fa-solid fa-arrows-rotate"></i>&nbsp;Surprise Me!
-        </button>
-    </form>
+    <div class="btn-grid">
+        <form action="/" method="post">
+            <button name="action" value="refresh" type="submit">
+                <i class="fa-solid fa-arrows-rotate"></i>&nbsp;Surprise Me!
+            </button>
+        </form>
+
+        <form action="/favourites" method="post">
+            <button name="action" value="refresh" type="submit">
+                Favourites
+            </button>
+        </form>
+    </div>
 
     <div class="picks">
         {% for pokemon in pokemons %}
