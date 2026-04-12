@@ -1,7 +1,4 @@
 # PokéDex
-#### Vide Demo: https://youtu.be/5hIkzvLd6DA
-#### Project: https://github.com/ChamalInd/Pokedex.git
-
 
 ### Project Overview
 
