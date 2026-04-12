@@ -18,10 +18,10 @@
 ### Getting Started
 
 #### Prerequisites
-- Make sure you have Python installed. You can check by running
-    ```python --vesion```
-- Make sure you have SQLite3 installed. You can check by running
-    ```sqlite3 --vesion```
+- Make sure you have Python installed. 
+    You can check by running ```python --vesion```
+- Make sure you have SQLite3 installed. 
+    You can check by running ```sqlite3 --vesion```
 
 #### Installation
 - Clone the project to your system
