@@ -1,5 +1,6 @@
-# Pokédex
+# PokéDex
 #### Vide Demo: https://youtu.be/5hIkzvLd6DA
+#### Projcet: https://github.com/ChamalInd/Pokedex.git
 
 #### A Simple and Interactive Pokédex inspired by the PokéDex on Pokémon website.
 
