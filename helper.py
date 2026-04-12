@@ -32,9 +32,9 @@ def get_basic_data(name):
     try:
         # getting data from api
         if name.isnumeric():
-            pokemon_data = lookup(f'pokemon/{name.lower()}')
-        else:
             pokemon_data = lookup(f'pokemon/{name}')
+        else:
+            pokemon_data = lookup(f'pokemon/{name.lower()}')
 
         return {
             'id': pokemon_data['id'],
@@ -42,19 +42,17 @@ def get_basic_data(name):
             'img': pokemon_data['sprites']['other']['official-artwork']['front_default']
         }
     
-    except Exception as e:
-        print(e)
-
-    return None
+    except:
+        return None
 
 
 def get_measures(name):
     try:
         # getting data from api
         if name.isnumeric():
-            pokemon_data = lookup(f'pokemon/{name.lower()}')
-        else:
             pokemon_data = lookup(f'pokemon/{name}')
+        else:
+            pokemon_data = lookup(f'pokemon/{name.lower()}')
 
         # converting height into feet and inches
         height = format(pokemon_data['height'], 0)
@@ -85,13 +83,17 @@ def get_measures(name):
     return None
 
 
-def get_evolution(name):
+def get_evolution(inp):
     try:
         # getting data from api
-        if name.isnumeric():
-            pokemon_data = lookup(f'pokemon/{name.lower()}')
+        if inp.isnumeric():
+            pokemon_data = lookup(f'pokemon/{inp}')
         else:
-            pokemon_data = lookup(f'pokemon/{name}')
+            pokemon_data = lookup(f'pokemon/{inp.lower()}')
+
+        # get pokemon id
+        poke_id = pokemon_data["id"]
+        name = pokemon_data["name"]
 
         # getting pokemon species
         species = pokemon_data['species']['name']
@@ -114,11 +116,22 @@ def get_evolution(name):
             else:
                 current_link = None
 
+        # change names to ids
+        try:
+            known_index = evoloution.index(name.capitalize())
+        except:
+            known_index = evoloution.index(species.capitalize())
+        for i in range(len(evoloution)):
+            evoloution[i] = poke_id + (i - known_index)
+
+        print(evoloution)
+
         # get basic data of pokemons in evolution
         evo_basics = []
-        for name in evoloution:
-            dict = get_basic_data(name)
-            evo_basics.append(dict)
+        for id in evoloution:
+            dict = get_basic_data(str(id))
+            if dict is not None:
+                evo_basics.append(dict)
 
         return evo_basics
     

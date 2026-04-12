@@ -51,18 +51,19 @@ def pokemon():
     # error checking
     if name:
         basic = get_basic_data(name)
-        measures = get_measures(name)
-        evolution = get_evolution(name)
 
-        favs = cursor.execute('SELECT * FROM favourites').fetchall()
-        for i in favs:
-            if basic["id"] == i[0]:
-                isfav = True
-                break
-            else:
-                isfav = False
-        
-        if basic != None and measures != None and evolution != None:
+        if basic:
+            measures = get_measures(name)
+            evolution = get_evolution(name)
+
+            favs = cursor.execute('SELECT * FROM favourites').fetchall()
+            for i in favs:
+                if basic["id"] == i[0]:
+                    isfav = True
+                    break
+                else:
+                    isfav = False
+
             return render_template('pokemon.html', basic=basic, measures=measures, evolution=evolution, isfav=isfav)
         else:
             flash(f'Invalid Pokémon name {name}')
