@@ -27,6 +27,19 @@ COLOR_SCHEME = {
 }
 
 
+# get all the pokemon names
+def get_pokemon_names():
+    try:
+        data = lookup('pokemon?limit=2000')
+
+        names = []
+        for pokemon in data['results']:
+            names.append(pokemon['name'].capitalize())
+        return sorted(names)
+    except:
+        return None
+
+
 # getting neccessary data
 def get_basic_data(name):
     try:
@@ -127,8 +140,6 @@ def get_evolution(inp):
                 evoloution[i] = data["id"]
             except:
                 evoloution[i] = poke_id + (i - known_index)
-
-        print(evoloution)
 
         # get basic data of pokemons in evolution
         evo_basics = []

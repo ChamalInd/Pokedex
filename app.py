@@ -2,7 +2,7 @@ from flask import Flask, request, render_template, redirect, flash
 from helper import (
     get_basic_data, get_measures, get_evolution, 
     gather_weakness, index_pokemons, search_colors,
-    format, syncronize_request
+    format, syncronize_request, get_pokemon_names
 )
 
 import sqlite3
@@ -40,8 +40,9 @@ def index():
         if request.form.get('action') == 'refresh':
            pokemons = index_pokemons()
 
+    names = get_pokemon_names()
     pokemons = index_pokemons()
-    return render_template('index.html', pokemons=pokemons)
+    return render_template('index.html', pokemons=pokemons, names=names)
 
 
 @app.route('/pokemon', methods=['GET', 'POST'])

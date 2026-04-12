@@ -11,7 +11,13 @@ Pokédex
         <h1>PokéDex</h1>
     </div>
     <form action="/pokemon" method="post">
-        <input autofocus autocomplete="off" type="search" name="name" placeholder="Search your favourite pokémon">
+        <input autofocus autocomplete="off" type="search" name="name" placeholder="Search your favourite pokémon"
+            list="pokemon-names">
+        <datalist id="pokemon-names">
+            {% for name in names %}
+            <option value="{{ name }}">
+            {% endfor %}
+        </datalist>
         <button name="action" value="search" type="submit">
             <i class="fa-solid fa-magnifying-glass"></i>
         </button>
