@@ -18,9 +18,9 @@
 ### Getting Started
 
 #### Prerequisites
-- Make sure you have Python installed. 
+- Make sure you have Python installed. <br>
     You can check by running ```python --vesion```
-- Make sure you have SQLite3 installed. 
+- Make sure you have SQLite3 installed. <br>
     You can check by running ```sqlite3 --vesion```
 
 #### Installation
